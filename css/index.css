@@ -1,0 +1,111 @@
+@import url('https://fonts.googleapis.com/css2?family=Sansita+Swashed:wght@300..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Golos+Text:wght@400..900&family=Lexend+Deca:wght@100..900&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Golos+Text:wght@400..900&family=Lexend+Deca:wght@100..900&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-image: url(../img/pexels-leonmart-1552252.jpg);
+    background-size: cover;
+    display: flex;
+    justify-content: center;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 10%;
+    border: 5px solid aliceblue;
+    border-radius: 3px;
+    height: 550px;
+    width: 400px;
+    background-image: url(../img/pexels-adrien-olichon-1257089-3137073.jpg);
+    background-size: cover;
+    background-color: rgb(43, 39, 37);
+    background-blend-mode: multiply;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-bottom: 25px;
+    width: 220px;
+}
+
+.container h1 {
+    font-family: "Sansita Swashed", system-ui;
+    font-size: 32px;
+    font-weight: 600;
+    color: aliceblue;
+    margin-top: 60px;
+    margin-bottom: 20px;
+}
+
+.container h2 {
+    font-family: "Montserrat", sans-serif;
+    font-size: 22px;
+    font-weight: 400;
+    color: aliceblue;
+    margin-top: 5px;
+    margin-bottom: 22px;
+}
+
+.container label {
+    font-family: "Lexend Deca", sans-serif;
+    font-size: 18px;
+    font-weight: 300;
+    color: aliceblue;
+}
+
+.container input {
+    height: 25px;
+    width: 220px;
+    position: relative;
+    bottom: 5px;
+}
+
+.container button {
+    height: 40px;
+    width: 220px;
+    font-family: "Montserrat", sans-serif;
+    font-size: 17px;
+    font-weight: 500;
+    margin-top: 20px;
+    margin-bottom: 30px;
+    cursor: pointer;
+}
+
+.container a {
+    font-family: "Lexend Deca", sans-serif;
+    font-size: 15px;
+    font-weight: 350;
+    text-decoration: none;
+    color: aliceblue;
+    margin-bottom: 15px;
+}
+
+.container a:hover {
+    color: #457b9d;
+}
+
+#nome{
+    margin-top: 10px;
+}
+
+#login{
+    margin-top: 10px;
+}
+
+#senha{
+    margin-top: 10px;
+}
+
+#voltar{
+    position: relative;
+    bottom: 15px;
+}

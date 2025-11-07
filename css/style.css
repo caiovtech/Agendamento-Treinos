@@ -1,0 +1,170 @@
+@import url('https://fonts.googleapis.com/css2?family=Lexend+Deca:wght@100..900&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-family: "Lexend Deca", sans-serif;
+    color: aliceblue;  
+    background-image: url(../img/pexels-leonmart-1552252.jpg);
+    background-size: cover;
+    background-attachment: fixed;
+    background-color: rgba(43, 39, 37, 0.600);
+    background-blend-mode: multiply;      
+}
+
+.top-bar {
+    width: 100%;
+    padding: 15px;
+    background: rgba(0, 0, 0, 0.7);
+    text-align: left;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+}
+
+.btn-voltar {
+    font-family: "Lexend Deca", sans-serif;
+    font-size: 16px;
+    text-decoration: none;
+    background: #e63946;
+    color: white;
+    padding: 8px 15px;
+    border-radius: 4px;
+    transition: 0.3s;
+}
+
+.btn-voltar:hover {
+    background: #b02a37;
+}
+
+.container {
+    margin-top: 160px;
+    padding: 50px;
+    width: 80%;
+    max-width: 900px;
+    background: rgba(0, 0, 0, 0.6);
+    border: 2px solid aliceblue;
+    border-radius: 8px;
+    text-align: center;
+}
+
+.container h1 {
+    font-family: "Montserrat", sans-serif;
+    font-size: 28px;
+    font-weight: 600;
+    margin-bottom: 20px;
+    color: aliceblue;
+}
+
+.container p {
+    font-size: 18px;
+    margin-bottom: 20px;
+}
+
+.container button, .container .btn {
+    background: #457b9d;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    margin: 10px;
+    border-radius: 5px;
+    font-family: "Montserrat", sans-serif;
+    font-size: 16px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.container button:hover, .container .btn:hover {
+    background: #1d3557;
+}
+
+.container a {
+    font-size: 17px;
+    color: #a8dadc;
+    text-decoration: none;
+    transition: 0.3s;
+}
+
+.container a:hover {
+    color: #f1faee;
+    text-decoration: underline;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    background: rgba(255, 255, 255, 0.05);
+}
+
+table th, table td {
+    padding: 12px;
+    border: 1px solid aliceblue;
+    text-align: center;
+    color: aliceblue;
+}
+
+table th {
+    background: rgba(255, 255, 255, 0.15);
+    font-weight: 600;
+}
+
+li{
+    list-style: none;
+}
+
+#tema{
+    height: 30px;
+}
+
+#data{
+    height: 30px;
+}
+
+#local{
+    height: 30px;
+}
+
+#nota{
+    height: 30px;
+    width: 45px;
+}
+
+#comentario{
+    position: relative;
+    top: 9px;
+}
+
+#formTreinamento {
+    display: flex;
+    flex-direction: column;
+    gap: 15px 10px;
+    align-items: center;
+    padding: 20px;
+    max-width: 500px; 
+    margin: 0 auto;
+}
+
+#formTreinamento label {
+    justify-self: end; 
+}
+
+#formTreinamento button {
+    grid-column: 1 / -1; 
+    justify-self: center;
+    margin-top: 15px;
+}
+
+#formTreinamento input[type="text"],
+#formTreinamento input[type="datetime-local"] {
+    height: 30px;
+    width: 70%;
+}
