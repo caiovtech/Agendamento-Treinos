@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Gerenciar Usuários</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+    <div class="top-bar">
+        <a href="dashboard.html" class="btn-voltar">⬅ Voltar ao Dashboard</a>
+    </div>
+
+    <div class="container">
+        <h1 id="h1-usuarios">Usuários Cadastrados</h1>
+
+        <table id="tabelaUsuarios">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nome de Usuário</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+
+    <script>
+        async function carregarUsuarios() {
+            const resposta = await fetch("php/listar_usuarios.php");
+            const usuarios = await resposta.json();
+
+            const tabela = document.querySelector("#tabelaUsuarios tbody");
+            tabela.innerHTML = "";
+
+            usuarios.forEach(u => {
+                tabela.innerHTML += `
+          <tr>
+            <td>${u.id}</td>
+            <td>${u.nome_usuario}</td>
+            <td>
+              <button onclick="editar(${u.id}, '${u.nome_usuario}')">Editar</button>
+              <button onclick="excluir(${u.id})">Excluir</button>
+            </td>
+          </tr>
+        `;
+            });
+        }
+
+        async function excluir(id) {
+            const formData = new FormData();
+            formData.append("id", id);
+
+            const resposta = await fetch("php/excluir_usuario.php", {
+                method: "POST",
+                body: formData
+            });
+            alert(await resposta.text());
+            carregarUsuarios();
+        }
+
+        function editar(id, nome) {
+            const novoNome = prompt("Novo nome:", nome);
+            const novaSenha = prompt("Nova senha:");
+
+            if (!novoNome || !novaSenha) return;
+
+            const formData = new FormData();
+            formData.append("id", id);
+            formData.append("nome_usuario", novoNome);
+            formData.append("senha", novaSenha);
+
+            fetch("php/editar_usuario.php", {
+                method: "POST",
+                body: formData
+            })
+                .then(r => r.text())
+                .then(alert)
+                .then(carregarUsuarios);
+        }
+
+        carregarUsuarios();
+    </script>
+</body>
+
+</html>

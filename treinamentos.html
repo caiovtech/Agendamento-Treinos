@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerenciar Treinamentos</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+    <div class="top-bar">
+        <a href="dashboard.html" class="btn-voltar">⬅ Voltar ao Dashboard</a>
+    </div>
+
+    <div class="container">
+        <h1>Treinamentos</h1>
+
+        <form id="formTreinamento" action="php/cadastrar_treinamento.php" method="post">
+            
+            <label for="descricao">Descrição (Tema):</label>
+            <input type="text" id="descricao" name="descricao" required>
+
+            <label for="datahora_inicio">Data/Hora de Início:</label>
+            <input type="datetime-local" id="datahora_inicio" name="datahora_inicio" required>
+
+            <label for="datahora_fim">Data/Hora de Fim:</label>
+            <input type="datetime-local" id="datahora_fim" name="datahora_fim" required>
+
+            <label for="observacao">Observação (Local/Detalhes - Opcional):</label>
+            <input type="text" id="observacao" name="observacao">
+
+            <input type="hidden" name="pessoa_id" value="1"> 
+            <input type="hidden" name="treinamento_tipo_id" value="1"> 
+
+            <button type="submit">Cadastrar Treinamento</button>
+        </form>
+        <h2>Lista de Treinamentos</h2>
+        <table id="tabelaTreinamentos">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Descrição</th>
+                    <th>Início</th>
+                    <th>Fim</th>
+                    <th>Observação</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+
+    <script>
+        async function carregarTreinamentos() {
+            const resposta = await fetch("php/listar_treinamentos.php");
+            try {
+                const treinamentos = await resposta.json();
+                const tabela = document.querySelector("#tabelaTreinamentos tbody");
+                tabela.innerHTML = "";
+
+                treinamentos.forEach(t => {
+                    tabela.innerHTML += `
+                        <tr>
+                            <td>${t.treinamento_id}</td> <td>${t.descricao}</td>
+                            <td>${t.datahora_inicio}</td>
+                            <td>${t.datahora_fim}</td>
+                            <td>${t.observacao || '-'}</td> <td>
+                                <button onclick="editar(
+                                    ${t.treinamento_id}, 
+                                    '${t.descricao}', 
+                                    '${t.datahora_inicio}', 
+                                    '${t.datahora_fim}', 
+                                    '${t.observacao || ''}' 
+                                )">Editar</button>
+                                <button onclick="excluir(${t.treinamento_id})">Excluir</button>
+                            </td>
+                        </tr>
+                    `;
+                });
+            } catch (e) {
+                console.error("Erro ao carregar ou processar JSON:", e);
+                document.querySelector("#tabelaTreinamentos tbody").innerHTML = '<tr><td colspan="6">Erro ao carregar treinamentos ou lista vazia.</td></tr>';
+            }
+        }
+
+        const form = document.getElementById("formTreinamento");
+        form.addEventListener("submit", async (e) => {
+            e.preventDefault();
+
+            const formData = new FormData(form);
+
+            const resposta = await fetch("php/cadastrar_treinamento.php", {
+                method: "POST",
+                body: formData
+            });
+
+            alert(await resposta.text());
+            form.reset();
+            carregarTreinamentos();
+        });
+
+        async function excluir(id) {
+            if (!confirm("Tem certeza que deseja excluir este treinamento?")) return;
+
+            const formData = new FormData();
+            formData.append("id", id);
+
+            const resposta = await fetch("php/excluir_treinamento.php", {
+                method: "POST",
+                body: formData
+            });
+
+            alert(await resposta.text());
+            carregarTreinamentos();
+        }
+
+        async function editar(id, descricao, datahora_inicio, datahora_fim, observacao) {
+            const limparData = (data) => data ? data.replace('T', ' ').replace(':00.000Z', '').substring(0, 16) : '';
+
+            const novaDescricao = prompt("Nova descrição:", descricao);
+            const novaDataInicio = prompt("Nova Data/Hora de Início (YYYY-MM-DDTHH:MM):", limparData(datahora_inicio));
+            const novaDataFim = prompt("Nova Data/Hora de Fim (YYYY-MM-DDTHH:MM):", limparData(datahora_fim));
+            const novaObservacao = prompt("Nova observação (Opcional):", observacao);
+
+            if (!novaDescricao || !novaDataInicio || !novaDataFim) {
+                 alert("Edição cancelada ou campos obrigatórios não preenchidos.");
+                 return;
+            }
+
+            const formData = new FormData();
+            formData.append("id", id);
+            formData.append("descricao", novaDescricao);
+            formData.append("datahora_inicio", novaDataInicio);
+            formData.append("datahora_fim", novaDataFim);
+            formData.append("observacao", novaObservacao); 
+            
+
+            const resposta = await fetch("php/editar_treinamento.php", {
+                method: "POST",
+                body: formData
+            });
+
+            alert(await resposta.text());
+            carregarTreinamentos();
+        }
+
+        carregarTreinamentos();
+    </script>
+</body>
+
+</html>
